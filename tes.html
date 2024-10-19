@@ -40,13 +40,20 @@
                 .then(html => {
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
-                    const avatarUrl = doc.querySelector('.avatar-card-image').src;
-                    const robuxSpent = doc.querySelector('.robux-spent').innerText;
+                    const avatarElement = doc.querySelector('.avatar-card-image');
+                    const robuxElement = doc.querySelector('.robux-spent');
 
-                    document.getElementById('avatar').innerHTML = `<img src="${avatarUrl}" alt="Avatar">`;
-                    document.getElementById('robuxAmount').innerText = robuxSpent;
-                    document.getElementById('robuxSpent').style.display = 'block';
-                    document.getElementById('ratingForm').style.display = 'block';
+                    if (avatarElement && robuxElement) {
+                        const avatarUrl = avatarElement.src;
+                        const robuxSpent = robuxElement.innerText;
+
+                        document.getElementById('avatar').innerHTML = `<img src="${avatarUrl}" alt="Avatar">`;
+                        document.getElementById('robuxAmount').innerText = robuxSpent;
+                        document.getElementById('robuxSpent').style.display = 'block';
+                        document.getElementById('ratingForm').style.display = 'block';
+                    } else {
+                        alert('Could not find avatar or Robux information. Please check the username and try again.');
+                    }
                 })
                 .catch(error => console.error('Error:', error));
         });
